@@ -1,5 +1,7 @@
+/*
 #include <fstream>
 #include <iostream>
+*/
 #include <string>
 #include <stdlib.h>
 #include "List.h"
@@ -8,25 +10,24 @@ using namespace std;
 
 int main(int argc, char *argv[]) {
 
-    if (argc!=2) {
+    if (argc!=3) {
         cout << " file number not match. Sorry!" << endl;
         return 1;
     }
 
     ifstream inFile;
+	ifstream inFile2;
   //  ofstream outFile;
     inFile.open(argv[1], ios::in);
     if (inFile.fail()) {
        cout << "File " << argv[1] << " open error. Sorry!" << endl;
        return 1;
     }
-/*
-    outFile.open("RESULT", ios::out);
-    if (outFile.fail()) {
-       cout << "Output file RESULT open error. Sorry!" << endl;
+	inFile2.open(argv[2], ios::in);
+    if (inFile.fail()) {
+       cout << "File " << argv[2] << " open error. Sorry!" << endl;
        return 1;
     }
-*/
 /*
 Instantiate one double Lists and two string Lists. Use data in the
 double file to construct the double List. And use the data in the
@@ -40,88 +41,66 @@ are indeed the same. Use cout to report the comparison result.
 9. Modify the makefile from the Assignment 3 to compile your program
 */
     unsigned int dataLength;
-    inFile >> dataLength;
-    cout << "Given data length is " << dataLength << endl;
-    List<double> double_list(dataLength);
-
-    double_list.setLength(dataLength);
-	/*
-    inFile >>double_list;
-    cout<< "First, the alist\n";
-    cout<< "alist size is " << double_list.getLength() << endl;
-    cout<< double_list;
-	*/
-    inFile.close();
-
-    // blist not empty, setLength(20) should fail.
-	/*
-    blist.setLength(20);
-    blist.resetLength(30);
-    outFile << "\nSecond, the Original blist\n";
-    outFile << "blist size is " << blist.getLength() << endl;
-    for (unsigned int i = 0; i < blist.getLength(); i++)
-        blist.setElement(i, i-14);
-    outFile << blist;
-
-    if (alist == blist) {
-       outFile << "\nalist == blist\n";
-    } else {
-       outFile << "\nalist != blist\n";
-    }
-
-    clist = alist + blist;
-    outFile << "\nThen, add alist and blist into clist\n";
-    outFile << "clist size is " << clist.getLength() << endl;
-    outFile << clist;
-
-    blist = alist;
-    outFile << "\nNow, the blist assigned by alist\n";
-    outFile << "blist size is " << blist.getLength() << endl;
-    outFile << blist;
-
-    if (alist != blist) {
-       outFile << "\nalist != blist\n";
-    } else {
-       outFile << "\nalist == blist\n";
-    }
-
-    clist.clear();
-    outFile << "\nReset clist: clist size is " << clist.getLength() << endl;
-    outFile << "\nCopy alist to the clist, with a for loop\n";
-    clist.setLength(alist.getLength());
-    for (unsigned int i = 0; i < clist.getLength(); i++) {
-        clist.setElement(i, alist.getElement(i));
-    }
-    outFile << "clist size is " << clist.getLength() << endl;
-    outFile << clist;
-
-    List dlist(alist);
-    outFile << "\nalist is copied to dlist using copy constructor\n";
-    outFile << "dlist size is " << dlist.getLength() << endl;
-    outFile << dlist;
-
-    dlist += alist;
-    outFile << "\nAdd alist to dlist\n";
-    outFile << "dlist size is " << dlist.getLength() << endl;
-    outFile << dlist;
-
-    outFile << "\ndlist prefix adds 1\n";
-    outFile << ++dlist;
-
-    outFile << "\ndlist postfix adds 1 more : before\n";
-    outFile << dlist++;
-    outFile << "\ndlist postfix adds 1 more : after\n";
-    outFile << dlist;
-
-    outFile << "\nclist prefix substracts 1\n";
-    outFile << --clist;
-
-    outFile << "\nclist postfix substracts 1 more : before\n";
-    outFile << clist--;
-    outFile << "\nclist postfix substracts 1 more : after\n";
-    outFile << clist;
-
-    outFile.close();
-*/
+    inFile>>dataLength;
+    cout<<"Given data length is "<<dataLength<<endl;
+    List<double> double_list;
+	double_list.setLength(dataLength);
+	cout<<"double file content read in class should be "<<endl;
+	inFile>>double_list;
+	inFile.close();
+	cout<<double_list;
+	List<double> double_list_copy(double_list);
+	cout<<"Copy constructor on double type content should be same "<<endl;
+	cout<<double_list_copy;
+	
+	
+	
+	unsigned int dataLength2;
+	inFile2>>dataLength2;
+	List<string> string_list(dataLength2);
+	inFile2>>string_list;
+	inFile2.close();
+	cout<<"string file content read in class should be "<<endl;
+	cout<<string_list;
+	List<string> string_list_copy;
+	string_list_copy=string_list;
+	cout<<"assignment operator on string type content should be same "<<endl;
+	cout<<string_list_copy;
+	
+	cout<<"operator==test should be 1"<<endl;
+	cout<<(string_list_copy==string_list)<<endl;
+	
+	cout<<"operator!=test should be 0"<<endl;
+	cout<<(double_list!=double_list_copy)<<endl;
+	
+	cout<<"operator +test "<<endl;
+	cout<<double_list+double_list_copy<<endl;
+	
+	cout<<"operator ++ postfix test "<<endl;
+	cout<<double_list++;
+	cout<<double_list;
+	cout<<"operator ++ pretfix test "<<endl;
+	cout<<++double_list;
+	
+	cout<<"operator -- postfix test "<<endl;
+	cout<<double_list--;
+	cout<<double_list;
+	cout<<"operator -- pretfix test "<<endl;
+	cout<<--double_list;
+	
+	cout<<"clear test return should be 1"<<endl;
+	cout<<double_list.clear()<<endl;
+	cout<<double_list_copy<<endl;
+	cout<<"resetlength test return should be 1"<<endl;
+	cout<<double_list_copy.resetLength(4)<<endl;
+	
+	cout<<"resetlength test length should be 4"<<endl;
+	cout<<double_list_copy.getLength()<<endl;
+	cout<<"setelement test"<<endl;
+	double_list_copy.setElement(0,1.2);
+	double_list_copy.setElement(1,2.1);
+	double_list_copy.setElement(2,3.2);
+	double_list_copy.setElement(3,5.8);
+	cout<<double_list_copy<<endl;
     return 0;
 }

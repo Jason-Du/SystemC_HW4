@@ -2,21 +2,21 @@
 #define NODE
 #include <cstddef>
 #include <cassert>
-template<class Tmplt> 
+template<class T> 
 class Node {
 protected:
-    Tmplt *_Node;
+    T*_Node;
 
 public:
     Node();
 	~Node();
     Node(unsigned int);
-	void setelement(unsigned int ,Tmplt)const;
-	Tmplt getelement(unsigned int)const;
+	void setelement(unsigned int ,T)const;
+	T getelement(unsigned int)const;
     Node(const Node&);
 	Node& operator=(const Node&);
 
-    Tmplt* reCreate(unsigned int);
+    T* reCreate(unsigned int);
 };
 
 template<class T> 
